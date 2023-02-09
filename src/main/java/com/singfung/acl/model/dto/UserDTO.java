@@ -1,7 +1,8 @@
 package com.singfung.acl.model.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
 public class UserDTO
