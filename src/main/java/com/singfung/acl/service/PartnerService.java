@@ -22,11 +22,19 @@ public class PartnerService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public Partner addUser(PartnerDTO partnerDTO) {
+    public Partner addPartner(PartnerDTO partnerDTO) {
         String appId = partnerDTO.getAppId();
+        if (appId == null || appId.length() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "appId could neither be null nor empty");
+        }
 
         if(partnerRepository.findByAppId(appId) != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "appId already exists");
+        }
+
+        String apiKey = partnerDTO.getApiKey();
+        if (apiKey == null || apiKey.length() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "apiKey could neither be null nor empty");
         }
 
         Partner partner = new Partner();
