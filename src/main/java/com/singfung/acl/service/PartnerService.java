@@ -1,6 +1,6 @@
 package com.singfung.acl.service;
 
-import com.singfung.acl.model.dto.UserDTO;
+import com.singfung.acl.model.dto.PartnerDTO;
 import com.singfung.acl.model.entity.Partner;
 import com.singfung.acl.repository.PartnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class PartnerService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public Partner addUser(UserDTO userDTO) {
-        String appId = userDTO.getAppId();
+    public Partner addUser(PartnerDTO partnerDTO) {
+        String appId = partnerDTO.getAppId();
 
         if(partnerRepository.findByAppId(appId) != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "appId already exists");
@@ -31,7 +31,7 @@ public class PartnerService {
 
         Partner partner = new Partner();
         partner.setAppId(appId);
-        partner.setApiKey(bCryptPasswordEncoder.encode(userDTO.getApiKey()));
+        partner.setApiKey(bCryptPasswordEncoder.encode(partnerDTO.getApiKey()));
         partner.setCreateTime(new Date());
         partner.setTs(new Date());
 
