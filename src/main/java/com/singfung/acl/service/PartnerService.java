@@ -22,27 +22,50 @@ public class PartnerService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public Partner addPartner(PartnerDTO partnerDTO) {
+    public Partner addPartner(PartnerDTO dto) {
+        validatePartnerDTO(dto);
+
+        if(partnerRepository.findByAppId(dto.getAppId()) != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "appId already exists");
+        }
+
+        Partner partner = new Partner();
+        partner.setAppId(dto.getAppId());
+        partner.setApiKey(bCryptPasswordEncoder.encode(dto.getApiKey()));
+        partner.setCreateTime(new Date());
+        partner.setTs(new Date());
+
+        return partnerRepository.save(partner);
+    }
+
+    private void validateAuthentication(PartnerDTO dto) {
+        validatePartnerDTO(dto);
+
+        Partner partner = partnerRepository.findByAppId(dto.getAppId());
+        if (partner == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid appId");
+        }
+
+        if(!bCryptPasswordEncoder.matches(dto.getApiKey(), partner.getApiKey())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication failed");
+        }
+    }
+
+    private void validatePartnerDTO(PartnerDTO partnerDTO) {
         String appId = partnerDTO.getAppId();
         if (appId == null || appId.length() == 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "appId could neither be null nor empty");
-        }
-
-        if(partnerRepository.findByAppId(appId) != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "appId already exists");
         }
 
         String apiKey = partnerDTO.getApiKey();
         if (apiKey == null || apiKey.length() == 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "apiKey could neither be null nor empty");
         }
+    }
 
-        Partner partner = new Partner();
-        partner.setAppId(appId);
-        partner.setApiKey(bCryptPasswordEncoder.encode(partnerDTO.getApiKey()));
-        partner.setCreateTime(new Date());
-        partner.setTs(new Date());
+    public void permission1(PartnerDTO dto) {
+        validateAuthentication(dto);
 
-        return partnerRepository.save(partner);
+        // do something
     }
 }
