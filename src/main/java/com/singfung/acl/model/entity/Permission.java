@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "acl_permission")
+@Table(name = "permission")
 @Data
 public class Permission {
     @Id

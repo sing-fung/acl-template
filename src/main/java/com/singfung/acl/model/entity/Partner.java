@@ -1,25 +1,29 @@
 package com.singfung.acl.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "acl_user_permission")
+@Table(name = "partner")
 @Data
-public class UserPermission {
+@NoArgsConstructor
+public class Partner {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(name = "user_id")
-    Integer userId;
+    @Column(name = "app_id", nullable = false, unique = true, length = 25)
+    String appId;
 
-    @Column(name = "permission_id")
-    Integer permissionId;
+    @Column(name = "api_key", nullable = false, length = 256)
+    @JsonIgnore
+    String apiKey;
 
     @Column(name = "create_time", nullable = false, length = 50)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
