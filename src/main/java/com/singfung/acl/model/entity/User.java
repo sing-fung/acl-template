@@ -18,12 +18,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column(name = "username", nullable = false, unique = true, length = 25)
-    String username;
+    @Column(name = "app_id", nullable = false, unique = true, length = 25)
+    String appId;
 
-    @Column(name = "password", nullable = false, length = 256)
+    @Column(name = "api_key", nullable = false, length = 256)
     @JsonIgnore
-    String password;
+    String apiKey;
 
     @Column(name = "create_time", nullable = false, length = 50)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

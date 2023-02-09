@@ -7,9 +7,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class UserDTO
 {
-    @NotBlank(message = "username cannot be empty")
-    String username;
+    @NotBlank(message = "appId cannot be empty")
+    String appId;
 
-    @NotBlank(message = "password cannot be empty")
-    String password;
+    @NotBlank(message = "apiKey cannot be empty")
+    String apiKey;
 }

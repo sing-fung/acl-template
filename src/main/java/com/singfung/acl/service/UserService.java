@@ -23,15 +23,15 @@ public class UserService {
     }
 
     public User addUser(UserDTO userDTO) {
-        String username = userDTO.getUsername();
+        String appId = userDTO.getAppId();
 
-        if(userRepository.findByUsername(username) != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "username already exists");
+        if(userRepository.findByAppId(appId) != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "appId already exists");
         }
 
         User user = new User();
-        user.setUsername(username);
-        user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        user.setAppId(appId);
+        user.setApiKey(bCryptPasswordEncoder.encode(userDTO.getApiKey()));
         user.setCreateTime(new Date());
         user.setTs(new Date());
 
