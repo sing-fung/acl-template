@@ -38,7 +38,7 @@ public class PartnerService {
         return partnerRepository.save(partner);
     }
 
-    private void validateAuthentication(PartnerDTO dto) {
+    public Partner validateAuthentication(PartnerDTO dto) {
         validatePartnerDTO(dto);
 
         Partner partner = partnerRepository.findByAppId(dto.getAppId());
@@ -49,6 +49,8 @@ public class PartnerService {
         if(!bCryptPasswordEncoder.matches(dto.getApiKey(), partner.getApiKey())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication failed");
         }
+
+        return partner;
     }
 
     private void validatePartnerDTO(PartnerDTO partnerDTO) {
@@ -61,11 +63,5 @@ public class PartnerService {
         if (apiKey == null || apiKey.length() == 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "apiKey could neither be null nor empty");
         }
-    }
-
-    public void permission1(PartnerDTO dto) {
-        validateAuthentication(dto);
-
-        // do something
     }
 }
