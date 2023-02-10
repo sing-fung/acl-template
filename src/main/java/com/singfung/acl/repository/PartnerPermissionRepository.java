@@ -8,6 +8,4 @@ import java.io.Serializable;
 
 @Repository
 public interface PartnerPermissionRepository extends JpaRepository<PartnerPermission, Serializable>
-{
-    
-}
+{}
