@@ -3,7 +3,6 @@ package com.singfung.acl.model.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,7 +10,6 @@ import java.util.Date;
 @Entity
 @Table(name = "partner")
 @Data
-@NoArgsConstructor
 public class Partner {
     @Id
     @Column(name = "id")
